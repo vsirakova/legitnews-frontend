@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Route,
     Link
 }
@@ -9,6 +9,7 @@ from 'react-router-dom'
 import Header from './components/Header'
 // Views
 import Home from './views/Home'
+import NewsDetail from './views/NewsDetail'
 
 export default class Routes extends React.Component {
     constructor(props) {
@@ -19,11 +20,14 @@ export default class Routes extends React.Component {
     render() {
         return (
             <div className='row'>
-            <div className='col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2'>
-                <Header />
-                <Router>
-                    <Route exact path='/' component={Home} /> 
-                </Router>
+				<Header />
+            	<div className='col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2'>
+					<Router>
+						<div>
+						<Route exact path='/' component={Home} /> 
+						<Route exact path='/news/:id' component={NewsDetail} /> 
+						</div>
+					</Router>
                 </div>
             </div>
         )
