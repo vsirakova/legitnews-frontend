@@ -1,36 +1,53 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import Services from './../shared/Services'
 
 export default class NewsCard extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {params:this.props.match.params}
-		console.log(this.state.params)
-	}
 
+	}
+	componentWillMount() {
+		let self = this
+		console.log(self.props)
+		Services.getArticles()
+		.then((result)=>{
+			let newsDetail = result.data.filter((n) => {
+				return n.id == self.state.params.id
+			})[0]
+			console.log(newsDetail)
+			
+			self.setState({
+				title : newsDetail.header,
+				image : newsDetail.image,
+				description : '<p class="paragraph">'+newsDetail.paragraphs.join('</p><p class="paragraph">')+'</p>'
+			})
+			console.log(newsDetail[0])
+			
+		})
+	}
 	render () {
 		return (
 			<Card style={{marginBottom:30}}>
 				<CardHeader
-				title="URL Avatar"
-				subtitle="Subtitle"
-				avatar=""
-				style={{height:200}}
+				title={this.state.heading ? this.state.heading : ''}
 				/>
 				<CardMedia
-				overlay={<CardTitle title={this.props.heading ? this.props.heading : ''} subtitle={this.props.label ? this.props.label : ''} />}
+				overlay={<CardTitle title={this.state.heading ? this.state.heading : ''} subtitle={this.state.label ? this.state.label : ''} />}
 				>
-				<img src={this.props.image ? this.props.image : ''} alt="" />
+				<img src={this.state.image ? this.state.image : ''} alt="" />
 				</CardMedia>
-				<CardTitle title={this.props.heading} subtitle={this.props.label ? this.props.label : ''} />
-				<CardText>
-				{this.props.description ? this.props.description : 'No description'}
+				<CardTitle title={this.state.heading} subtitle={this.state.label ? this.state.label : ''} />
+				<CardText style={{fontSize:20,fontFamily:'Helvetica',padding:'20px 30px'}}>
+					<div dangerouslySetInnerHTML={{__html:this.state.description}}>
+
+						</div>
+				
 				</CardText>
 				<CardActions>
-				<FlatButton label="Read More ..." onClick={()=>{
-					window.location = '#/news/213'
-					}} />
+					
 				</CardActions>
 			</Card>
 		)

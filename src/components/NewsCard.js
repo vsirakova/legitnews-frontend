@@ -25,7 +25,7 @@ export default class NewsCard extends React.Component{
 				</CardText>
 				<CardActions>
 				<FlatButton label="Read More ..." onClick={()=>{
-					window.location = '#/news/213'
+					window.location = '#/news/'+this.props.newsID
 					}} />
 				</CardActions>
 			</Card>

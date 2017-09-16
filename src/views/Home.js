@@ -29,9 +29,9 @@ export default class Home extends React.Component {
 					this.state.news.map((news,index) => {
 						if(!news.image) console.log(news)
 						return (
-							<div className='col-sm-6' style={{display:'flex'}}>
+							<div className='col-sm-6' key={'__'+index} style={{display:'flex'}}>
 							<NewsCard 
-							key={'__'+index}
+							newsID={news.id}
 							image={news.image}
 							label={news.header ? news.header.substring(0,20)+'...' : ''}
 							description={news.paragraphs[1].substring(0,115)+'...'} />
